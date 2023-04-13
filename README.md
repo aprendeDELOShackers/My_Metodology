@@ -1,5 +1,5 @@
 # _Josema_Metodology_
-os presento como me organizo en la parte de reconocimiento de un objetivo en el mundo de "Bug Bounty"
+#_os presento como me organizo en la parte de reconocimiento de un objetivo en el mundo de "Bug Bounty"_
 
 # _Metodology For Bug Hunter's_
 
@@ -20,6 +20,9 @@ os presento como me organizo en la parte de reconocimiento de un objetivo en el 
 # _ASN enumerations  CMD_LINE para encontrar ASN_
     {amass} https://github.com/caffix/amass
         amass intel -org {dominio} | awk -F, '{print $1}' | anew asn.txt | for i in $(cat asn.txt);do amass intel -asn $i;done
+    #OTRA FORMA DE EMUN "ASN"
+        amas intel -org {dominio} --max-dns-queries 2500 | awk -F, '{print $1}' | anew asn.txt | cat asn.txt ORS="." | set 's/.$//g' | xargs -P3 -I@ -d "." amass intel -asn @ --max-dns-queries 2500
+
 # _ASN enumerations  CMD_LINE. Para buscar rango de IP desde un ASN Encontrado_
     {whois} 
         whois -h whois.radb.net  -- '-i origin AS714' | grep -Eo "([0-9.]+){4}/[0-9]+" | anew rango_ip.txt
@@ -341,7 +344,3 @@ os presento como me organizo en la parte de reconocimiento de un objetivo en el 
     Provando todos los comando conbinados
     echo "testphp.vulnweb.com" | subfinder -all |  waybackurls | anew history_url.txt && cat history_url.txt | httpx -silent | anew  | unfurl domains | anew | gau-plus | tee anew gau.meg.txt
     meg gau.meg.txt paths
-
-
-    echo "testphp.vulnweb.com" | subfinder -all |  waybackurls | anew history_url.txt && cat history_url.txt | gf sqli | uro
-    echo "testphp.vulnweb.com" | subfinder -all |  waybackurls | anew history_url.txt && cat history_url.txt | gf xss | uro
